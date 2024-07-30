@@ -1,1 +1,61 @@
+1.Find average of two numbers.
+      pseudo:
+          Input number1
+          Input number2
+          sum = number1 + number2 
+          average = sum / 2
+          Print average 
 
+      pseudo:routine
+          Function FindAverage(num1,num2)
+            average=num1+num2
+            return avg
+
+      pseudo: routine test
+          procedure TestFindAverage()
+              Input num1
+              Input num2
+              average= FindAverage(num1,num2)
+              print average
+
+2.Cube of a number.
+      pseudo: 
+        Input num 
+        cube = num * num * num 
+        Print cube 
+ 
+      pseudo: routine 
+          Function FindCube(num)
+              cube = num * num * num 
+              Return cube 
+          
+      pseudo: routine test
+          Procedure TestFindCube()
+              Input num 
+              cube = FindCube(num)
+              Print cube 
+
+3.Square of a number
+      Pseudo:
+          Input num
+          square= num*num
+          print square
+
+      pseudo: routine
+          Function FindSquare()
+              square=num*num
+              return square
+
+      pseudo: routine test
+          Procedure TestFindSquare()
+              Input num
+              square=FindSquare()
+              print square
+
+4.Swap two numbers
+     pseudo:
+          Input number 1
+          Input number 2
+          number 1 = number 1 + number2
+          number 2 = number1 - number2
+          number 1 =  number 1 - number 2
