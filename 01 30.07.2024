@@ -101,4 +101,21 @@
 
 6. Check divisible by 27
     pseudo :
-           
+            input num
+            if num % 27 == 0;
+               print 'number is divisible by27'
+            else;
+               print'number is not divisible by 27'
+      Pseudo routine:
+            Function IsDivisibleBy27(num)
+               if num % 27 ==0
+                  return true
+               else 
+                  return false
+      pseudo routine test
+                  function TestIsDivisibleBy27()
+                    input num 
+                    if IsDivisibleBy27(num)
+                        print "Divisible By 27"
+                    else 
+                        print "Not Divisible By 27"
