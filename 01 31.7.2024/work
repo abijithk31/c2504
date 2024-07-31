@@ -103,7 +103,7 @@
       count=count+1
     END
 
-8. To print the one is adust based his/her age 
+8. To print the one is adult based his/her age 
    Note: Dont print if not adult
     function IsAdult(age) -> boolean 
         isAdult = (age >= 18);
@@ -156,3 +156,70 @@
     if(CheckTemp(temp))
       print 'It is hot outside.'
     end if
+
+12.Input mark,if mark is greater than 40 print pass else fail
+
+    pseudocode:routine
+    function IsMarkGreaterThan40(mark)
+        return (mark > 40)
+    
+    function IsMarkGreaterThan40(mark)
+        isMarkGreaterThan40 = (mark > 40)
+        return isMarkGreaterThan40
+    
+    pseudocode:test routine
+    function TestIsMarkGreaterThan40()
+        Input mark 
+        if IsMarkGreaterThan40(mark)
+            print "pass" 
+        else 
+            print "fail"
+
+13.To check the person is teenageer,adult or child
+    
+    pseudocode:routine
+    function IsAdult(age)
+            isAdult = (age >= 18);
+            return isAdult; 
+        function IsTeenager(age)
+            isTeenager = (age >= 13);
+            return isTeenager; 
+    pseudocode:test
+        function TestIsAdultTeenagerOrChild():
+            Input age 
+            if(IsAdult(age)) 
+                print 'You are an adult.'
+            else if(IsTeenager(age)) 
+                print 'You are a teenager.'
+            else
+                print 'You are a child.'
+            end if
+
+14.check for car maintenance
+      pseudocode:routine
+      function SuggestMaintenance(serviceOption->char) -> string
+              string suggestion;
+              switch serviceOption
+                  case 'O':
+                      suggestion = "Change Oil and Replace Oil Filter"
+                      break
+                  case 'T':
+                      suggestion = "Rotate Tire and align them properly"
+                      break
+                  case 'B':
+                      suggestion = "Inspect the brake and replace them if necessary"
+                      break
+                  case 'A':
+                      suggestion = "Battery Check and Replace them"
+                      break
+                  default: 
+                      suggestion = "Some other reason"
+                      break 
+              end switch 
+              return suggestion
+
+        pseudocode:routine test
+        function TestSuggestMaintenance() 
+             Input serviceOption 
+             suggestion = SuggestMaintenance(serviceOption)
+             print suggestion
