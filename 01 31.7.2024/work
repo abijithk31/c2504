@@ -102,3 +102,57 @@
       number=number+2
       count=count+1
     END
+
+8. To print the one is adust based his/her age 
+   Note: Dont print if not adult
+    function IsAdult(age) -> boolean 
+        isAdult = (age >= 18);
+        return isAdult; 
+
+    function TestIsAdult(): -> None
+        Input age 
+        if(IsAdult(age)) 
+            print 'You are an adult.'
+        end if
+
+9.Take a num 10, if num greater than 5 ,print "num as 'greater than 5'"
+
+      pseudo:rountine 
+      function IsGreaterThan5(num)
+      IsGreaterThan5 = (num > 5);
+      return IsGreaterThan5;
+      
+      pseudo:routine test
+      function TestIsGreaterThan5()
+      Input num 
+      if(IsGreaterThan5(num)) 
+        print 'Number is greater than Five.'
+      end if
+
+10.To print 'number is positive' if num > 0,it should not print if not positive 
+
+      pseudo:rountine 
+      function IsPositiveNum(num)
+      IsPositiveNum= (num > 0);
+      return IsPositiveNum;
+      
+      pseudo:routine test
+      function TestIsPositiveNum()
+      Input num 
+      if(IsPositiveNum(num))
+        print 'Number is positive.'
+      end if
+
+11.if temp > 25, print it is hot outside.
+
+    pseudo:rountine 
+    function CheckTemp(temp)
+    CheckTemp= (temp > 25);
+    return CheckTemp;
+    
+    pseudo:routine test
+    function TestCheckTemp()
+    Input temp
+    if(CheckTemp(temp))
+      print 'It is hot outside.'
+    end if
