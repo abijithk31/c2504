@@ -1,0 +1,104 @@
+1.write the pseudocode for calculating the total cost of items in a shopping cart
+  including applying a discount if the total exceeds a certain amount
+              item price = double [12.00, 34.25, 56.85, 45, 23.64]
+          double discount=0
+          double total cost=0
+          for i in item price;
+          		total cost= i + Total cost
+          if total cost>150;
+          	double discount =(total cost*10)/100
+          	double total cost= total cost - discount
+          	double print total cost
+          else ;
+          	double print total cost
+
+2.simple calculator
+        a= double input first number
+        b= double input second number
+        enter the operator(+, -, *, /)
+        
+        if operator = +
+        	double print 'result=',a + b
+        else if operator = -
+        	double print 'result=',a - b
+        else if operator = *
+        	double print 'result=',a * b
+        else if operator = /
+        	double print 'result=',a / b 
+        else
+        	print 'invalid'
+
+3.FizzBuzz Problem
+        for i in range(0,101):
+        	if i % 3 == 0; and if i % 5 == 0:
+        		print 'fizz buzz'
+        	elif i % 3 == 0;
+        		print 'fizz'
+        	elif i % 5 == 0;
+        		print 'buzz'
+        	else
+        		print i
+        	end if
+        end for
+
+4.check string is palindrome or not
+        n = input  a string
+        y=''
+        for i in n
+        	y = i + y
+        if y==n
+        	print 'string is palindrome'
+        else 
+        	print 'not palindrome'
+
+5.finding largest from araay
+      a= integer[2, 4, 8, 66, 44, 96]
+      c=0
+      for i in a
+        if i>c
+          c==i
+        else
+          continue
+      integer print c
+
+6.write pseudocode to manage a simple bank account that allows deposits withdrawals and checking the balance.
+      l=[]
+      Function Register()
+      	l1=list[]
+      		integer a=enter account number
+      		l1.append(a)
+      		double balance=0
+      		l1.append(balance)
+      //append the account number and into the list if you are first time registering in a bank.
+      
+      Function login()
+      	integer b=enter account number
+      	for i in l:
+      		if i[0]==b
+      			enter option string (deposit, withdrawal, check balance)
+      			if choice=deposit
+      				integer d = enter amount
+      				for i in l:
+      					i[1] = i[1] + d	
+      			elif choice=withdrawal
+      				integer d = enter amount
+      				for i in l:
+      					i[1] = i[1] - d	
+      			elif choice=check balance
+      				print balance
+      			else 
+      				print 'invalid choice'
+      		else
+      			print 'invalid account number'
+
+7.Sum of first 10 even number.
+    BEGIN
+    declare a integer sum=0
+    declare a integer number= 2
+    declare a integer count=0
+    
+    While(count<10)
+      sum= sum + number
+      number=number+2
+      count=count+1
+    END
