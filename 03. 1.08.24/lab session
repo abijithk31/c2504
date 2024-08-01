@@ -1,0 +1,12 @@
+1.Learned the basics of coding in the lab session .
+      >Declare different data types like :
+        double d = 10.52;
+        char c = 'a';
+2.Types of data conversion.
+    a.Implicit
+        >Datatypes must be compatible.
+        >Should be converting from smaller to larger bit.
+        >There should not be any possible errors.
+    b.Explicit
+3.How to read something from the user.
+4.Basic arithmetic operations.
