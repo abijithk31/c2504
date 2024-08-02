@@ -10,7 +10,7 @@ Q1.(a) print series 10, 12, 14, 16, ... N term-(for loop)
     function TestPrintSeries10_12_14()
         Input numOfTerms
         PrintSeries10_12_14(numOfTerms)
-    ----c#----
+    ----C#----
        class Q01
         {
             static void PrintSeries10_12_14(int numOfTerms)
@@ -58,7 +58,7 @@ Q1.(a) print series 10, 12, 14, 16, ... N term-(for loop)
       function TestPrintSeries10_12_14()
           Input numOfTerms
           PrintSeries10_12_14(numOfTerms)
-      ------c#-----
+      ------C#-----
         class Q02
             {
                 static void PrintSeries10_12_14(int numOfTerms)
@@ -111,7 +111,7 @@ Q1.(c).print series 10, 12, 14, 16, ... N terms -   (do.while loop)
           function TestPrintSeries10_12_14()
               Input numOfTerms
               PrintSeries10_12_14(numOfTerms)
-    --------c#-------
+    ------C#-------
         class Q03
               {
                   static void PrintSeries10_12_14(int numOfTerms)
@@ -172,7 +172,7 @@ Q2.(a) print the N th term in the series 21, 22, 24, 27, 31, ...(for loop)
             Input N                             
             nthTerm = GetNthTerm_21_22_24_27(N)
             Print nthTerm
-    ----c#-----
+    ----C#-----
       class Q04
         {
             //21_22_24_27_31_36_42_49
