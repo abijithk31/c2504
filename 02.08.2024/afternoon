@@ -1,1 +1,21 @@
+P3. print the following pattern 
+        1
+      1 2
+    1 2 3
+  1 2 3 4
+1 2 3 4 5
 
+-------C#---------
+                for (int row = 1; row <= 5; row++)
+                {
+                    int spaces = 5 - row;
+                    int num = 1;
+                    for (int col = 1; col <= 5; col++)
+                    { 
+                        if (col <= spaces)
+                            Console.Write(" ");
+                        else
+                            Console.Write(num++);
+                    }
+                    Console.WriteLine();
+                }
