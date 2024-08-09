@@ -1,1 +1,142 @@
+>>Create time table using html<<
+        <!DOCTYPE html>
+        <html>
+           <head>
+            <title>Table</title>
+           </head>
+           <body>
+            <h1>Time Table</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>9:30am - 10:30am</th>
+                        <th>10:30am - 11:30am</th>
+                        <th>11:30am - 12:00pm</th>
+                        <th>12:00pm - 1:00pm</th>
+                        <th>1:00pm - 2:00pm</th>
+        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>monday   </td>
+                        <td>Language</td>
+                        <td>Physics</td>
+                        <td>Break</td>
+                        <td>Physics</td>
+                        <td>Maths</td>
+        
+                    </tr>
+                    <tr>
+                        <td>Tuesday</td>
+                        <td>Chemistry</td>
+                        <td>Social Science</td>
+                        <td>Break</td>
+                        <td>hindi</td>
+                        <td>English</td>
+        
+                    </tr>
+                    <tr>
+                        <td>Wednesday</td>
+                        <td>English</td>
+                        <td>Maths</td>
+                        <td>Break</td>
+                        <td>Biology</td>
+                        <td>Computer lab</td>
+        
+                    </tr>
+                    <tr>
+                        <td>Thursday</td>
+                        <td>Maths</td>
+                        <td>Social Science</td>
+                        <td>Break</td>
+                        <td>Chemistry</td>
+                        <td>Language</td>
+        
+                    </tr>
+                    <tr>
+                        <td>Friday</td>
+                        <td>Chemistry</td>
+                        <td>Social Science</td>
+                        <td>break</td>
+                        <td>hindi</td>
+                        <td>English</td>
+        
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="6">Saturday , sunday holiday</th>
+                    </tr>
+                </tfoot>
+            </table>
+            <iframe src="https://in.search.yahoo.com/?fr2=inr"></iframe>
+           </body>
+        </html>
+---------------------------------------------------------------------------------
 
+Basic tags
+      <html>
+      <head>
+          <title>My web page</title>
+      </head>
+      <style>
+          h1{
+              color: rgb(231, 21, 21);
+          }
+          body{
+              background-color:rgb(255, 255, 255);
+          }
+      </style>
+      <body>
+          <p>Hello world</p>
+          <p>Use this <code>hello</code>to display</p>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione minus architecto corporis. Eos, illum nostrum totam accusantium deserunt ratione beatae odio iste temporibus, quam maxime. Ipsam eligendi inventore neque natus.</p>
+          <pre>dgfdfg
+              sffsf
+          sdf
+      fsf
+          </pre>
+          <h1>hi</h1>
+          <h2>hi</h2>
+          <h3>hi</h3>
+          <h4>hi</h4>
+          <h5>hi</h5>
+          <h6>hi</h6>
+          <!-- <span>hi</span>  to write in a style-->
+          <p>Lorem ipsum dolor, sit amet consectetur elit. Autem esse commodi ex quaerat voluptatibus, possimus saepe,<wbr> ad quos sapiente necessitatibus asperiores cupiditate corrupti fuga sequi vel nobis voluptas? Velit, labore.</p>
+          <a href="contact.html">contact</a>
+          <ul>
+              <li>item 1</li>
+              <li>item 2</li>
+              <li>item 3</li>
+  
+          </ul>
+          <hr>
+          <ol type="A">
+              <li>item 1</li>
+              <li>item 2</li>
+              <li>item 3</li>
+          </ol>
+          <hr>
+          <p>This is <b>important</b></p>
+          <p>This is <strong>important</strong></p>
+  
+          <p>Please <i>get out</i></p>
+          <p>Please <em>get out</em></p>
+  
+          <p>This is <del>no more available</del></p>
+  
+          <hr>
+          <p>H<sub>2</sub>O</p>
+          <p>7<sup>th</sup>day</p>
+          <hr>
+  
+          <!-- to display certain characters we use html enities -->
+           &lt;b&gt;
+           &copy;
+            
+  
+      </body>
+  </html>
