@@ -40,9 +40,13 @@ Problem: Given an `Employees` table
 with columns `EmployeeID`, `Name`, and `DateOfBirth`,
 find the oldest and youngest employees.
 
-	SELECT Name , MIN( DATEDIFF(YEAR, DateOfBirth, GETDATE())) as Youngest, 
- 	MAX( DATEDIFF(YEAR, DateOfBirth, GETDATE())) as Oldest
-	FROM Employees
+	SELECT * FROM EMPLOYEES 
+	WHERE DateOfBirth = (SELECT MIN(DateOfBirth) FROM Employees) OR 
+	DateOfBirth = (SELECT MAX(DateOfBirth) FROM Employees)
+
+	SELECT * FROM EMPLOYEES 
+	WHERE DateOfBirth IN ((SELECT MIN(DateOfBirth) FROM Employees) ,
+	(SELECT MAX(DateOfBirth) FROM Employees))
 ------------------------------------------------------------------------------------
 4.Find the Most Recent Order for Each Customer
 Problem: Given an `Orders` table
