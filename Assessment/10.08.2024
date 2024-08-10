@@ -1,1 +1,73 @@
+1.Find the Average Sales Per Customer
+Problem:
+Given an `Orders` table
+with columns `OrderID`, `CustomerID`, and `SaleAmount`,
+calculate the average sales amount per customer.
 
+	SELECT OrderID, CustomerID, SaleAmount, AVG(SaleAmount) as avg sales
+	FROM Orders
+	GROUP BY CustomerID
+------------------------------------------------------------------------------------
+2.Find Employees with No Manager
+Problem:
+Given an `Employees` table
+with columns `EmployeeID`, `Name`, and `ManagerID`
+(which refers to `EmployeeID` of the manager),
+find all employees who do not have a manager.
+
+Table Structure:
+```
+CREATE TABLE Employees (
+EmployeeID INT,
+Name VARCHAR(100),
+ManagerID INT
+);
+	SELECT EmployeeID, Name
+	FROM Employees
+	WHERE ManagerID IS NULL;
+
+	OR 
+	Here ManagerID is the foreign key and it will be the primary key of another table of Managers with ManagerID as primary key then,
+
+	SELECT e.EmployeeID, e.Name
+	FROM Employees as e
+	INNER JOIN Managers as m
+	ON e.ManagerID = m.ManagerID
+	WHERE e.ManagerID IS NULL
+----------------------------------------------------------------------------------
+3.Find the Oldest and Youngest Employees
+Problem: Given an `Employees` table
+with columns `EmployeeID`, `Name`, and `DateOfBirth`,
+find the oldest and youngest employees.
+
+	SELECT Name , MIN( DATEDIFF(YEAR, DateOfBirth, GETDATE())) as Youngest, 
+ 	MAX( DATEDIFF(YEAR, DateOfBirth, GETDATE())) as Oldest
+	FROM Employees
+------------------------------------------------------------------------------------
+4.Find the Most Recent Order for Each Customer
+Problem: Given an `Orders` table
+with columns `OrderID`, `CustomerID`, and `OrderDate`,
+find the most recent order date for each customer.
+
+Table Structure:
+```
+CREATE TABLE Orders (
+OrderID INT,
+CustomerID INT,
+OrderDate DATE
+);
+
+	SELECT OrderID, CustomerID, MAX(OrderDate) as RecentPurchase 
+	From Orders
+	GROUP BY CustomerID
+------------------------------------------------------------------------------
+5.Find Employees Who Report to More Than One Manager
+Problem: Given an `Employees` table
+with columns `EmployeeID`, `Name`, and `ManagerID`,
+find employees who report to more than one manager.
+
+	SELECT  Name, COUNT(ManagerID) as ManagerNumber
+	FROM Employees
+	GROUP BY Name
+	HAVING COUNT(ManagerID) >= 2
+	
