@@ -1,1 +1,67 @@
+BankAccount
 
+class Account
+{
+    public string number;
+    public float balance;
+    public Account(string _number)
+    {
+        number = _number;
+        balance = 0;
+    }
+    public float Balance
+    {
+        get { return balance; }
+        private set
+        {
+            if (value < 0)
+            {
+                Console.WriteLine("you are not allowed to update negative balance");
+                return;
+            }
+            if (value > 5000000)
+            {
+                Console.WriteLine("you are not allowed to update balance above 5000000");
+                return;
+            }
+            balance = value;
+        }
+    }
+    public void deposit(float amount)
+    {
+        if(amount>1000000)
+        {
+            Console.WriteLine("you cannot deposit more thet 1000000");
+            return;
+        }
+        balance += amount;
+    }
+    public void withdraw(float amount)
+    {
+        if ((balance - amount) < 0)
+        {
+            Console.WriteLine("Insufficient balance");
+            return;
+        }
+        balance -= amount;
+    }
+}
+   
+}
+internal class Program
+{
+    static void Main(string[] args)
+    {
+    Account abijithAc = new Account("1001200230034");
+    abijithAc.deposit(10000);
+    abijithAc.deposit(20000);
+    abijithAc.withdraw(5000);
+    Console.WriteLine($"abijith account balance is {abijithAc.balance}");
+    abijithAc.deposit(-1);
+    abijithAc.deposit(0);
+    abijithAc.deposit(11000000);
+    abijithAc.withdraw(30000);
+
+    Console.ReadKey();
+
+}
