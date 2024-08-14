@@ -1,1 +1,135 @@
-
+1.>>Student Mark<<
+      class student
+      {
+          public int Mark1;
+          public int Mark2;
+          public int Mark3;
+      
+          public void TotalMark()
+          {
+              Console.WriteLine( Mark1 + Mark2 + Mark3);
+          }
+          public void Average()
+          {
+              Console.WriteLine((Mark1 + Mark2 + Mark3)/2);
+          }
+      
+      }
+      internal class Program
+      {
+          static void Main(string[] args)
+          {
+              student S1 = new student
+              {
+                  Mark1 = 67,
+                  Mark2 = 87,
+                  Mark3 = 26
+              };
+              S1.TotalMark();
+              S1.Average();
+      
+              student S2 = new student
+              {
+                  Mark1 = 56,
+                  Mark2 = 12,
+                  Mark3 = 35,
+              };
+              S2.TotalMark();
+              S2.Average();
+          }
+      }
+------------------------------------------------------------------
+2.>>>Calculator<<<
+             public class Calculator
+             {
+                 public double Num1;
+                 public double Num2;
+            
+                 public void Sum()
+                 {
+                     Console.WriteLine($"Sum = {Num1 + Num2}");
+                 }
+                 public void sub()
+                 {
+            
+                     Console.WriteLine($"Difference = {Num1 - Num2}");
+                 }
+                 public void div()
+                 {
+                     Console.WriteLine($"Quotient = {Num1 / Num2}");
+                 }
+                 public void Mul()
+                 {
+                     Console.WriteLine($"product = {Num1 * Num2}");
+                 }
+             }
+             internal class Program
+             {
+                 static void Main(string[] args)
+                 {
+                     Calculator C1 = new Calculator 
+                     {
+                         Num1 = 11,
+                         Num2 = 10
+                     };
+                     C1.Sum();
+                     C1.div();
+                     C1.Mul();
+                     C1.sub();
+                 }
+             }
+---------------------------------------------------------
+3.Land Project
+               class Rectangle
+               {
+                   public int length;
+                   public int breadth;
+                   public Rectangle(int _length, int _breadth)
+                   {
+                       length = _length;
+                       breadth = _breadth;
+                   }
+                   public override string ToString()
+                   {
+                       return $"[Length={length},Breadth={breadth},Area={FindArea()}]";
+                   }
+                   public int FindArea()
+                   {
+                       return length * breadth;
+                   }
+                   public bool IsAreaGt(Rectangle other)
+                   {
+                       return FindArea() > other.FindArea();
+                   }
+                   public bool IsAreaEq(Rectangle other)
+                   {
+                       return FindArea() == other.FindArea();
+                   }
+                   /*public bool IsAreaLt(Rectangle second) 
+                   { 
+                       Rectangle first = this; 
+                       return first.FindArea() > second.FindArea(); 
+                   }*/
+               }
+              
+               internal class Program
+               {
+                   static void Main(string[] args)
+                   {
+                       Rectangle firstLand = new Rectangle(50, 40);
+                       Rectangle secondLand = new Rectangle(60, 35);
+                       if (firstLand.IsAreaGt(secondLand))
+                       {
+                           Console.WriteLine($"First Land {firstLand} is greater than Second Land {secondLand}");
+                       }
+                       else if (firstLand.IsAreaEq(secondLand))
+                       {
+                           Console.WriteLine($"First Land {firstLand} equals Second Land {secondLand}");
+                       }
+                       else
+                       {
+                           Console.WriteLine($"First Land {firstLand} is less than Second Land {secondLand}");
+                       }
+                       Console.ReadKey();
+                   }
+               }
