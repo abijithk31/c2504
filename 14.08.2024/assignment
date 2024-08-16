@@ -132,7 +132,7 @@ namespace OOPSCricket
         }
         public int FindShortestDistance()
         { 
-           return Math.Min(Math.Min(LegSideDistance, OffSideDistance), Math.Min(StraightDistance, ThirdManDistance));
+           return Math.Min(Math.Min(LegSide, OffSide), Math.Min(Straight, ThirdMan));
         }
         public bool GetSuitableGroundGt(Cricket other)
         {
