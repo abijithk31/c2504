@@ -1,1 +1,60 @@
 
+
+
+
+
+New Interface
+
+interface INewService
+{
+    
+    void Start();// Abstract method
+
+    
+    void Stop()// Default method with implementation
+    {
+        Console.WriteLine("Default implementation of Stop.");
+    }
+
+    
+    static void PrintStatus()// Static method
+    {
+        Console.WriteLine("Static method PrintStatus in INewService.");
+    }
+
+    
+    void Report()
+    {
+        PrepareReport();
+        Console.WriteLine("Reporting...");
+    }
+
+    private void PrepareReport()
+    {
+        Console.WriteLine("Preparing report...");
+    }
+}
+
+class NewService : INewService
+{
+    public void Start()
+    {
+        Console.WriteLine("NewService started.");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        INewService.PrintStatus(); // Calling static method on the interface
+
+        INewService service = new NewService();
+        service.Start();
+        service.Stop(); // Uses default implementation from the interface
+        service.Report(); // Uses default method with private method
+    }
+}
+
+
+
