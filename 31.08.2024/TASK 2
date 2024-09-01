@@ -1,1 +1,303 @@
+>>PatientHistory DAO<<
 
+            namespace AssessmentFiveTask2
+            {
+                internal class PatientHistoryDAO
+                {
+            
+                    private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AssessmentFiveTaskdb;Integrated Security=True;";
+                    public void Create(PatientHistory patientHistory)
+                    {
+                        using (SqlConnection conn = new SqlConnection(connectionString))
+                        {
+                            string query = "INSERT INTO PatientHistory (HistoryID,PatientName,Medication,Duration) VALUES(@HistoryID, @PatientName, @Medication, @Duration)";
+                        SqlCommand cmd = new SqlCommand(query, conn);
+                            cmd.Parameters.AddWithValue("@HistoryID", patientHistory.HistoryID);
+                            cmd.Parameters.AddWithValue("@PatientName", patientHistory.PatientName);
+                            cmd.Parameters.AddWithValue("@Medication", patientHistory.Medication);
+                            cmd.Parameters.AddWithValue("@Duration", patientHistory.Duration);
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    // Read a PatientHistory by ID
+                    public PatientHistory Read(int HistoryID)
+                    {
+                        PatientHistory patientHistory = null;
+                        using (SqlConnection conn = new SqlConnection(connectionString))
+                        {
+                            string query = "SELECT HistoryID,PatientName,Medication,Duration FROM PatientHistory WHERE HistoryID = @HistoryID";
+                            SqlCommand cmd = new SqlCommand(query, conn);
+                            cmd.Parameters.AddWithValue("@HistoryID", HistoryID);
+                            conn.Open();
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                patientHistory = new PatientHistory((int)reader["HistoryID"],
+                               reader["PatientName"].ToString(), reader["Medication"].ToString(),
+                                (int)reader["Duration"]);
+                            }
+                        }
+                        return patientHistory;
+                    }
+                    // Update a PatientHistory
+                    public void Update(PatientHistory patientHistory)
+                    {
+                        using (SqlConnection conn = new SqlConnection(connectionString))
+                        {
+                            string query = "UPDATE PatientHistory SET HistoryID = @HistoryID, PatientName = @PatientName, Medication = @Medication, Duration =@Duration WHERE HistoryID = @HistoryID";
+                            SqlCommand cmd = new SqlCommand(query, conn);
+                            cmd.Parameters.AddWithValue("@HistoryID", patientHistory.HistoryID);
+                            cmd.Parameters.AddWithValue("@PatientName", patientHistory.PatientName);
+                            cmd.Parameters.AddWithValue("@Medication", patientHistory.Medication);
+                            cmd.Parameters.AddWithValue("@Duration", patientHistory.Duration);
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    // Delete a PatientHistory by ID
+                    public void Delete(int HistoryID)
+                    {
+                        using (SqlConnection conn = new SqlConnection(connectionString))
+                        {
+                            string query = "DELETE FROM PatientHistory WHERE HistoryID = @HistoryID";
+                            SqlCommand cmd = new SqlCommand(query, conn);
+                            cmd.Parameters.AddWithValue("@HistoryID", HistoryID);
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    // List all PatientHistory
+                    public List<PatientHistory> ListAll()
+                    {
+                        List<PatientHistory> patientHistory = new List<PatientHistory>();
+                        using (SqlConnection conn = new SqlConnection(connectionString))
+                        {
+                            string query = "SELECT HistoryID, PatientName, Medication, Duration FROM PatientHistory";
+                            SqlCommand cmd = new SqlCommand(query, conn);
+                            conn.Open();
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                PatientHistory patientHistorys = new PatientHistory((int)reader["HistoryID"], reader["PatientName"].ToString(), reader["Medication"].ToString(),(int)reader["Duration"]);
+                                patientHistory.Add(patientHistorys);
+                            }
+                        }
+                        return patientHistory;
+                    }
+                }
+            }
+--------------------------------------------------------------------------------------------------------------------------------------------
+>>PatientHistory UI<<
+
+
+
+                    namespace AssessmentFiveTask2
+                    {
+                        internal class PatientHistoryUI
+                        {
+                            private PatientHistoryDAO patientHistoryDAO = new PatientHistoryDAO();
+                    
+                            public void CreatePatientHistory()
+                            {
+                                Console.Write("Enter the HistoryID:");
+                                int HistoryID = int.Parse(Console.ReadLine());
+                                Console.Write("Enter the PatientName:");
+                                string PatientName = Console.ReadLine();
+                                Console.Write("Enter the Medication:");
+                                string Medication = Console.ReadLine();
+                                Console.Write("Enter the Duration:");
+                                int Duration = int.Parse(Console.ReadLine());
+                    
+                                PatientHistory patientHistory = new PatientHistory(HistoryID,PatientName,Medication,Duration);
+                    
+                                patientHistoryDAO.Create(patientHistory);
+                                Console.WriteLine("patientHistory created successfully.");
+                            }
+                    
+                            public void ReadPatientHistory()
+                            {
+                                Console.Write("Enter PatientHistory ID: ");
+                                int id = int.Parse(Console.ReadLine());
+                    
+                                PatientHistory patientHistory = patientHistoryDAO.Read(id);
+                                if (patientHistory != null)
+                                {
+                                    Console.WriteLine($"HistoryID: {patientHistory.HistoryID}");
+                                    Console.WriteLine($"PatientName: {patientHistory.PatientName}");
+                                    Console.WriteLine($"Medication: {patientHistory.Medication}");
+                                    Console.WriteLine($"Duration: {patientHistory.Duration}");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("PatientHistory not found.");
+                                }
+                            }
+                    
+                            public void UpdatePatientHistory()
+                            {
+                                Console.Write("Enter PatientHistory ID: ");
+                                int id = int.Parse(Console.ReadLine());
+                    
+                                PatientHistory patientHistory = patientHistoryDAO.Read(id);
+                                if (patientHistory != null)
+                                {
+                    
+                                    Console.Write("Enter new Patient Name: ");
+                                    patientHistory.PatientName = Console.ReadLine();
+                                    Console.Write("Enter new Medication: ");
+                                    patientHistory.Medication = Console.ReadLine();
+                                    Console.Write("Enter new duration: ");
+                                    patientHistory.Duration = int.Parse(Console.ReadLine());
+                    
+                    
+                                    patientHistoryDAO.Update(patientHistory);
+                                    Console.WriteLine("PatientHistory updated successfully.");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("PatientHistory not found.");
+                                }
+                            }
+                    
+                            public void DeletePatientHistory()
+                            {
+                                Console.Write("Enter PatientHistory ID: ");
+                                int id = int.Parse(Console.ReadLine());
+                    
+                                patientHistoryDAO.Delete(id);
+                                Console.WriteLine("PatientHistory deleted successfully.");
+                            }
+                    
+                            public void ListAllPatientHistory()
+                            {
+                                List<PatientHistory> patientHistorys = patientHistoryDAO.ListAll();
+                                foreach (var patientHistory in patientHistorys)
+                                {
+                                    Console.WriteLine($"HistoryID: {patientHistory.HistoryID}, PatientName: {patientHistory.PatientName}, Medication: {patientHistory.Medication}, Duration: {patientHistory.Duration}");
+                                }
+                            }
+                        }
+                    }
+-------------------------------------------------------------------------------------------------------------------------------
+
+>>patienthistory<<
+
+
+
+            namespace AssessmentFiveTask2
+            {
+            
+                internal class PatientHistory
+                {
+                    
+                    
+                        public int HistoryID { get; set; }
+                        public string PatientName { get; set; }
+                        public string Medication { get; set; }
+                        public int Duration { get; set; }
+                        public PatientHistory(int historyID, string patientName, string medication, int duration)
+                        {
+                            HistoryID = historyID;
+                            PatientName = patientName;
+                            Medication = medication;
+                            Duration = duration;
+                        }
+                        public override string ToString()
+                        {
+                            return $"HistoryID :{HistoryID},PatientName: {PatientName},Medication: {Medication},Duration: {Duration}";
+                        }
+                }
+            }
+--------------------------------------------------------------------------------------------------
+>>Patient History Menu<<
+
+              namespace AssessmentFiveTask2
+              {
+                  internal class PatientHistoryMenu
+                  {
+                      public static void Menu()
+                      {
+                          PatientHistoryUI ui = new PatientHistoryUI();
+                          bool running = true;
+              
+                          while (running)
+                          {
+                              Console.WriteLine("\nPatientHistory Management System");
+                              Console.WriteLine("1. Create PatientHistory");
+                              Console.WriteLine("2. Read PatientHistory");
+                              Console.WriteLine("3. Update PatientHistory");
+                              Console.WriteLine("4. Delete PatientHistory");
+                              Console.WriteLine("5. List All PatientHistory");
+                              Console.WriteLine("6. Exit");
+              
+                              Console.Write("Choose an option: ");
+                              string choice = Console.ReadLine();
+              
+                              switch (choice)
+                              {
+                                  case "1":
+                                      ui.CreatePatientHistory();
+                                      break;
+                                  case "2":
+                                      ui.ReadPatientHistory();
+                                      break;
+                                  case "3":
+                                      ui.UpdatePatientHistory();
+                                      break;
+                                  case "4":
+                                      ui.DeletePatientHistory();
+                                      break;
+                                  case "5":
+                                      ui.ListAllPatientHistory();
+                                      break;
+                                  case "6":
+                                      running = false;
+                                      Console.WriteLine("Exiting...");
+                                      break;
+                                  default:
+                                      Console.WriteLine("Invalid choice. Please try again.");
+                                      break;
+                              }
+                          }
+                      }
+                  }
+              }
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+>>SQL QUERY>>
+
+          CREATE DATABASE AssessmentFiveTaskdb;
+          USE AssessmentFiveTaskdb;
+          CREATE TABLE PatientHistory (
+           HistoryID INT PRIMARY KEY,
+           PatientName NVARCHAR(100),
+           Medication NVARCHAR(100),
+           Duration INT
+          );
+          INSERT INTO PatientHistory
+          (HistoryID, PatientName, Medication, Duration) VALUES
+          (1,'Rahul', 'Dolo 650', 120),
+          (2,'Girish', 'Vicks', 56),
+          (3, 'Abijith','Halls', 30);
+          SELECT * FROM PatientHistory;
+-----------------------------------------------------------------------------------------------------------------------------------------------
+>>Program.cs<<
+
+            using System;
+            using System.Collections.Generic;
+            using System.Linq;
+            using System.Text;
+            using System.Threading.Tasks;
+            
+            namespace AssessmentFiveTask2
+            {
+                internal class Program
+                {
+                    static void Main(string[] args)
+                    {
+                        PatientHistoryMenu.Menu();
+                        Console.ReadKey();
+                    }
+                }
+            }
