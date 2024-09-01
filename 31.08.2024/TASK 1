@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using log4net;
 
 namespace FifthAssessment
 {
@@ -16,76 +17,77 @@ namespace FifthAssessment
         public int HistoryID { get; set; }
         public string PatientName { get; set; }
         public string Medication { get; set; }
-        public double Duration { get; set; }
-        public PatientHistory(int HistoryID, string patientName, string medication, double duration)
+        public int Duration { get; set; }
+        public PatientHistory(int historyID, string patientName, string medication, int duration)
         {
-            this.HistoryID = HistoryID;
+            HistoryID = historyID;
             PatientName = patientName;
             Medication = medication;
             Duration = duration;
         }
         public override string ToString()
         {
-            return $"HistoryID :{ HistoryID},PatientName: { PatientName},Medication: { Medication},Duration: { Duration}";
+            return $"HistoryID :{HistoryID},PatientName: {PatientName},Medication: {Medication},Duration: {Duration}";
         }
     }
     public class PatientHistoryServices
     {
-        private static string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Week4AssessmentDb;Integrated Security = True;";
+        private static string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=FifthAssessmentdb;Integrated Security=True;";
         public static void Read(PatientHistory[] patientHistories)
         {
-            for (int i = 0; i < patientHistories.Length; i++)
-            {
-            Console.Write("Enter the HistoryID:");
-            int HistoryID = int.Parse(Console.ReadLine());
-            Console.Write("Enter the PatientName:");
-            string PatientName = Console.ReadLine();
-            Console.Write("Enter the Medication:");
-            string Medication = Console.ReadLine();
-            Console.Write("Enter the Duration:");
-            double duration = double.Parse(Console.ReadLine());
-            patientHistories[i] = new PatientHistory(HistoryID, PatientName, Medication, duration);
-            }
+            //for (int i = 0; i < patientHistories.Length; i++)
+            //{
+            //    Console.Write("Enter the HistoryID:");
+            //    int HistoryID = int.Parse(Console.ReadLine());
+            //    Console.Write("Enter the PatientName:");
+            //    string PatientName = Console.ReadLine();
+            //    Console.Write("Enter the Medication:");
+            //    string Medication = Console.ReadLine();
+            //    Console.Write("Enter the Duration:");
+            //    int Duration = int.Parse(Console.ReadLine());
 
-            //try
-            //{
-            //    using (SqlConnection conn = new SqlConnection(connectionString))
-            //    {
-            //        string query = "SELECT DoctorID, PatientName, Medication, Dosage FROM DoctorPrescription";
-            //    SqlCommand cmd = new SqlCommand(query, conn);
-            //        conn.Open();
-            //        SqlDataReader reader = cmd.ExecuteReader();
-            //        for (int i = 0; i < doctorPres.Length; i++)
-            //        {
-            //            if (!reader.Read())
-            //            {
-            //                throw new ServerException("[0101]Server Error.");//throw error
-            //            }
-            //            doctorPres[i] = new PatientHistory(
-            //            (int)reader["DoctorID"],
-            //            (string)reader["PatientName"],
-            //            (string)reader["Medication"],
-            //            (double)reader["Dosage"]
-            //            );
-            //        }
-            //    }
+            //    patientHistories[i] = new PatientHistory(HistoryID, PatientName, Medication, Duration);
             //}
-            //catch (SqlException ex)
-            //{
-            //    // Handle SQL exceptions
-            //    //Console.WriteLine($"SQL Error: {ex.Message}");
-            //    throw new ServerException($"[0102]Server Error.{ex.Message}");//throw Error
-            //}
-            //catch (ServerException ex)
-            //{
-            //    throw ex;
-            //}
-            //catch (Exception ex)
-            //{
-            //    // Handle other exceptions
-            //    //Console.WriteLine($"Error: {ex.Message}");
-            //    throw new ServerException($"[0103]Server Error.{ex.Message}");//throw Error
-            //}
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    string query = "SELECT HistoryID, PatientName, Medication, Duration FROM PatientHistory";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    for (int i = 0; i < patientHistories.Length; i++)
+                    {
+                        if (!reader.Read())
+                        {
+                            throw new ServerException("[0101]Server Error.");//throw error
+                        }
+                        patientHistories[i] = new PatientHistory(
+                        (int)reader["HistoryID"],
+                        (string)reader["PatientName"],
+                        (string)reader["Medication"],
+                        (int)reader["Duration"]
+                        );
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Handle SQL exceptions
+                //Console.WriteLine($"SQL Error: {ex.Message}");
+                throw new ServerException($"[0102]Server Error.{ex.Message}");//throw Error
+            }
+            catch (ServerException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                //Console.WriteLine($"Error: {ex.Message}");
+                throw new ServerException($"[0103]Server Error.{ex.Message}");//throw Error
+            }
         }
         public static void Sort(PatientHistory[] patientHistories)
         {
@@ -108,175 +110,148 @@ namespace FifthAssessment
                 }
             }
         }
-        public static PatientHistory LongestDuration(PatientHistory[] patientHistories, int HistoryID)
+        public static PatientHistory LongestDuration(PatientHistory[] patientHistories)
         {
             PatientHistory longestDuration = patientHistories[0];
-        for (int i = 1; i < n; i++)
-        {
-            if (patientHistories[i].Duration > longestDuration.Duration)
+            int n = patientHistories.Length;
+            for (int i = 1; i < n; i++)
             {
-                longestDuration = patientHistories[i];
+                if (patientHistories[i].Duration > longestDuration.Duration)
+                {
+                    longestDuration = patientHistories[i];
+                }
             }
-        }
-        Console.WriteLine("Patient History with Longest Duration:");
-        Console.WriteLine($"History ID: {longestDuration.HistoryID}, Patient Name: {longestDuration.PatientName}, Medication: {longestDuration.Medication}, Duration: {longestDuration.Duration}");
+            Console.WriteLine("Patient History with Longest Duration:");
+            Console.WriteLine($"History ID: {longestDuration.HistoryID}, Patient Name: {longestDuration.PatientName}, Medication: {longestDuration.Medication}, Duration: {longestDuration.Duration}");
+            return longestDuration;
 
         }
-        public static PatientHistory DisplayThirdMaxDosage(PatientHistory[] doctorPres)
+        public static PatientHistory SecondShortestDuration(PatientHistory[] patientHistories)
         {
-            for (int i = 0; i < doctorPres.Length; i++)
+            if (patientHistories.Length < 2) return null;
+
+            PatientHistory shortestDuration = patientHistories[0];
+            PatientHistory secondShortestDuration = null;
+
+            foreach (var history in patientHistories)
             {
-                int min = i;
-                for (int j = i + 1; j < doctorPres.Length; j++)
+                if (history.Duration < shortestDuration.Duration)
                 {
-                    if (doctorPres[j].Duration < doctorPres[min].Duration)
+                    secondShortestDuration = shortestDuration;
+                    shortestDuration = history;
+                }
+                else if (secondShortestDuration == null || history.Duration < secondShortestDuration.Duration)
+                {
+                    if (history.Duration != shortestDuration.Duration)
                     {
-                        min = j;
+                        secondShortestDuration = history;
                     }
                 }
-                if (i != min)
-                {
-                    PatientHistory temp = doctorPres[min];
-                    doctorPres[min] = doctorPres[i];
-                    doctorPres[i] = temp;
-                }
             }
-            Console.WriteLine($"Third Max Dosage is:{doctorPres[doctorPres.Length - 2]}");
-            return doctorPres[doctorPres.Length - 2];
+
+            Console.WriteLine("Patient History with Second Shortest Duration:");
+            Console.WriteLine(secondShortestDuration);
+            return secondShortestDuration;
+
+
         }
-    }
-    public class Program
-    {
-        private static readonly ILog log = LogManager.GetLogger(typeof(Program));
-        static void Main(string[] args)
+        public class Program
         {
-            PatientHistory[] doctorPres = new PatientHistory[3];
-            try
+            private static readonly ILog log = LogManager.GetLogger(typeof(Program));
+            static void Main(string[] args)
             {
-                PatientHistoryServices.Read(doctorPres);
-            }
-            catch (ServerException ex)
-            {
-                log.Error($"{ex.Message}");
-            }
-            PatientHistoryServices.Read(doctorPres);
-            log.Info("enter the doctor id to find the minimum dosage:");
-            int doctorID = int.Parse(Console.ReadLine());
-            PatientHistoryServices.LongestDuration(patientHistories, HistoryID);
-            PatientHistoryServices.DisplayThirdMaxDosage(doctorPres);
-            PatientHistoryServices.Sort(doctorPres);
-            log.Info("sorted by patient name:");
-            foreach (PatientHistory patient in doctorPres)
-            {
-                log.Info(patient);
+                PatientHistory[] patienthistories = new PatientHistory[3];
+                try
+                {
+                    PatientHistoryServices.Read(patienthistories);
+                }
+                catch (ServerException ex)
+                {
+                    log.Error($"{ex.Message}");
+                }
+                //PatientHistoryServices.Read(patienthistories);
+                //Console.WriteLine("enter the doctor id to find the minimum dosage:");
+                //log.Info("enter the doctor id to find the minimum dosage:");
+                //int doctorID = int.Parse(Console.ReadLine());
+                PatientHistoryServices.LongestDuration(patienthistories);
+                PatientHistoryServices.SecondShortestDuration(patienthistories);
+                PatientHistoryServices.Sort(patienthistories);
+                log.Info("sorted by patient name:");
+                //Console.WriteLine("sorted by patient name:");
+                foreach (PatientHistory patient in patienthistories)
+                {
+                    log.Info(patient);
+                    //Console.WriteLine(patient);
+                }
             }
         }
     }
 }
---------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
+TEST
 
-
-SQL QUERY
---------------------------------------------------------------------------------------------------------------------------------------
-CREATE DATABASE Week5AssessmentDb;
-USE Week5AssessmentDb;
-CREATE TABLE patienthistory(
-HistoryID INT PRIMARY KEY,
-PatientName VARCHAR(225),
-Medication NVARCHAR(100),
-Duration FLOAT
-);
-INSERT INTO patienthistory(HistoryID,PatientName,Medication,Duration)VALUES
-(1,'Fidha','Dolo 650',2),(2,'Sarika','Para',1),(3,'Athuliya','Vicks',3);
---------------------------------------------------------------------------------------------------------------------------------------
-AssemblyInfo.cs
---------------------------------------------------------------------------------------------------------------------------------------
-[assembly: log4net.Config.XmlConfigurator]
---------------------------------------------------------------------------------------------------------------------------------------
-App.config
---------------------------------------------------------------------------------------------------------------------------------------
-<?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-<configSections>
-<section name="log4net" 
-type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
-</configSections>
-<log4net>
-<!-- File Appender -->
-<appender name="FileAppender" type="log4net.Appender.RollingFileAppender">
-<file value="week4assessment_app_log.log" />
-<appendToFile value="true" />
-<rollingStyle value="Size" />
-<maxSizeRollBackups value="5" />
-<maximumFileSize value="10MB" />
-<staticLogFileName value="true" />
-<layout type="log4net.Layout.PatternLayout">
-<conversionPattern value="%date [%thread] %-5level %logger -
-%message%newline" />
-</layout>
-</appender>
-<!-- Console Appender -->
-<appender name="ConsoleAppender" type="log4net.Appender.ConsoleAppender">
-<layout type="log4net.Layout.PatternLayout">
-<conversionPattern value="%date [%thread] %-5level %logger -
-%message%newline" />
-</layout>
-</appender>
-<!-- Root logger -->
-<root>
-<level value="ALL" />
-<appender-ref ref="FileAppender" />
-<appender-ref ref="ConsoleAppender" />
-</root>
-</log4net>
-<startup> 
- <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
- </startup>
-</configuration>
--------------------------------------------------------------------------------------------------------------------------------------
-PatientHistoryServicesTest.cs
-----------------------------------------------------------------------------------------------------------------------------------
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Week4AssessmentApp;
+using FifthAssessment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace Week5AssessmentApp.Tests
-{
- [TestClass()]
- public class PatientHistoryServicesTest
- {
- [TestMethod()]
- public void DisplayLongestDurationTest()
- {
- PatientHistory[] PatientHistories = new PatientHistory[3];
- DoctorPrescriptionService.Read(doctorPres);
- int doctorID = 1; // Assuming you want to test for DoctorID 1
- DoctorPrescription expected = new DoctorPrescription(1, "Fidha", "Dolo 650", 2);
- DoctorPrescription actual = DoctorPrescriptionService.DisplayDocLeastDos(doctorPres, 
-doctorID);
- Assert.AreEqual(expected.ToString(), actual.ToString());
- }
- [TestMethod()]
- public void DisplaySecondLargest()
- {
- DoctorPrescription[] doctorPres = new DoctorPrescription[3];
- DoctorPrescriptionService.Read(doctorPres);
- DoctorPrescription expected = new DoctorPrescription(1, "Fidha", "Dolo 650", 2);
- DoctorPrescription actual = DoctorPrescriptionService.DisplayThirdMaxDosage(doctorPres);
- Assert.AreEqual(expected.ToString(), actual.ToString());
- }
- [TestMethod()]
- public void SortTest()
- {
- DoctorPrescription[] doctorPres = new DoctorPrescription[3];
- DoctorPrescriptionService.Read(doctorPres);
- DoctorPrescription expected = new DoctorPrescription(3, "Athuliya", "Vicks", 3);
- DoctorPrescriptionService.Sort(doctorPres);
- DoctorPrescription actual = doctorPres[0];
- Assert.AreEqual(expected.ToString(), actual.ToString());
- }
- }
 
+namespace FifthAssessment.Tests
+{
+    [TestClass()]
+    public class PatientHistoryServicesTests
+    {
+        [TestMethod()]
+        public void SortTest()
+        {
+            PatientHistory[] patienthistories = new PatientHistory[3];
+            PatientHistoryServices.Read(patienthistories);
+            PatientHistory expected = new PatientHistory(3, "Abijith", "Halls", 30);
+            PatientHistoryServices.Sort(patienthistories);
+            PatientHistory actual = patienthistories[0];
+            Assert.AreEqual(expected.ToString(), actual.ToString());
+
+        }
+
+        [TestMethod()]
+        public void LongestDurationTest()
+        {
+            PatientHistory[] patienthistories = new PatientHistory[3];
+            PatientHistoryServices.Read(patienthistories);
+            PatientHistory expected = new PatientHistory(1, "Rahul", "Dolo 650", 120);
+            PatientHistory actual = PatientHistoryServices.LongestDuration(patienthistories);
+            Assert.AreEqual(expected.ToString(), actual.ToString());
+        }
+
+        [TestMethod()]
+        public void SecondShortestDurationTest()
+        {
+            PatientHistory[] patienthistories = new PatientHistory[3];
+            PatientHistoryServices.Read(patienthistories);
+            PatientHistory expected = new PatientHistory(2, "Girish", "Vicks", 56);
+            PatientHistory actual = PatientHistoryServices.SecondShortestDuration(patienthistories);
+            Assert.AreEqual(expected.ToString(), actual.ToString());
+
+        }
+    }
+}
+-------------------------------------------------------------------------------------
+SQL QUERY
+
+CREATE DATABASE FifthAssessmentdb;
+USE FifthAssessmentdb;
+CREATE TABLE PatientHistory (
+ HistoryID INT PRIMARY KEY,
+ PatientName NVARCHAR(100),
+ Medication NVARCHAR(100),
+ Duration INT
+);
+INSERT INTO PatientHistory
+(HistoryID, PatientName, Medication, Duration) VALUES
+(1,'Rahul', 'Dolo 650', 120),
+(2,'Girish', 'Vicks', 56),
+(3, 'Abijith','Halls', 30);
+SELECT * FROM PatientHistory;
+--------------------------------------------------------------------------------------
