@@ -1,0 +1,12 @@
+<AlignerConfig>
+<Aligners>
+<Aligner Name="ALN1" ReleaseWaferAfterAlign="false" IsTCPDevice="true">
+<CommunicationSettings PortNumber="7" BaudRate="9600" Parity="0" StopBits="1" InterCharacterTimeout="600000" Delimiter="13,10" SpecialCharacters="62,63" HandShakeType="0"/>
+<TCPIPDeviceInfo CmdDelimeter="13" IPAddress="192.168.0.151" Name="ALN1" Port="12100" RspDelimeter="13" SpecialCharacters="62,63"/>
+</Aligner>
+</Aligners>
+<AckTimeOut>600000</AckTimeOut>
+<ResponseTimeOut>600000</ResponseTimeOut>
+<ReleaseWaferTimeOut>1000</ReleaseWaferTimeOut>
+<WaitForIdleDelay>100</WaitForIdleDelay>
+</AlignerConfig>
