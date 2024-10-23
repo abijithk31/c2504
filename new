@@ -10,3 +10,113 @@
 <ReleaseWaferTimeOut>1000</ReleaseWaferTimeOut>
 <WaitForIdleDelay>100</WaitForIdleDelay>
 </AlignerConfig>
+
+
+AlignerConfig.cs
+
+                using System.Collections.Generic;
+                using System.Xml.Serialization;
+                
+                namespace AlignerConfigApp
+                {
+                    public class AlignerConfig
+                    {
+                        [XmlArray("Aligners")]
+                        [XmlArrayItem("Aligner")]
+                        public List<Aligner> AlignerList { get; set; }
+                
+                        public int AckTimeOut { get; set; }
+                        public int ResponseTimeOut { get; set; }
+                        public int ReleaseWaferTimeOut { get; set; }
+                        public int WaitForIdleDelay { get; set; }
+                    }
+                
+                    public class Aligner
+                    {
+                        [XmlAttribute("Name")]
+                        public string Name { get; set; }
+                
+                        [XmlAttribute("ReleaseWaferAfterAlign")]
+                        public bool ReleaseWaferAfterAlign { get; set; }
+                
+                        [XmlAttribute("IsTCPDevice")]
+                        public bool IsTCPDevice { get; set; }
+                
+                        public CommunicationSettings CommunicationSettings { get; set; }
+                        public TCPIPDeviceInfo TCPIPDeviceInfo { get; set; }
+                    }
+                
+                    public class CommunicationSettings
+                    {
+                        public int PortNumber { get; set; }
+                        public int BaudRate { get; set; }
+                    }
+                
+                    public class TCPIPDeviceInfo
+                    {
+                        public string IPAddress { get; set; }
+                        public int Port { get; set; }
+                    }
+                }
+
+
+xaml
+            <Window x:Class="AlignerConfigApp.MainWindow"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    Title="Aligner Config" Height="350" Width="525">
+                <Grid>
+                    <TextBox Name="outputTextBox" VerticalScrollBarVisibility="Auto" 
+                             IsReadOnly="True" AcceptsReturn="True" 
+                             TextWrapping="Wrap" Margin="10"/>
+                </Grid>
+            </Window>
+
+xaml.cs
+                      using System;
+                      using System.IO;
+                      using System.Windows;
+                      using System.Xml.Serialization;
+                      
+                      namespace AlignerConfigApp
+                      {
+                          public partial class MainWindow : Window
+                          {
+                              public MainWindow()
+                              {
+                                  InitializeComponent();
+                                  LoadAlignerConfig("aligner_config.xml"); // Make sure the XML file is in the correct location
+                              }
+                      
+                              private void LoadAlignerConfig(string filePath)
+                              {
+                                  try
+                                  {
+                                      var serializer = new XmlSerializer(typeof(AlignerConfig));
+                                      using (var reader = new StreamReader(filePath))
+                                      {
+                                          var config = (AlignerConfig)serializer.Deserialize(reader);
+                                          DisplayConfig(config);
+                                      }
+                                  }
+                                  catch (Exception ex)
+                                  {
+                                      MessageBox.Show($"Error loading config: {ex.Message}");
+                                  }
+                              }
+                      
+                              private void DisplayConfig(AlignerConfig config)
+                              {
+                                  outputTextBox.Clear();
+                                  outputTextBox.AppendText($"AckTimeOut: {config.AckTimeOut}\n");
+                                  outputTextBox.AppendText($"ResponseTimeOut: {config.ResponseTimeOut}\n");
+                                  outputTextBox.AppendText($"ReleaseWaferTimeOut: {config.ReleaseWaferTimeOut}\n");
+                                  outputTextBox.AppendText($"WaitForIdleDelay: {config.WaitForIdleDelay}\n");
+                      
+                                  foreach (var aligner in config.AlignerList)
+                                  {
+                                      outputTextBox.AppendText($"Aligner Name: {aligner.Name}\n");
+                                  }
+                              }
+                          }
+                      }
